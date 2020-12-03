@@ -1,35 +1,33 @@
 import axios from "axios"
-import createForm from "../utils/formData"
-import { clear } from "../utils/tempPicDownload"
+import { VkAttachments } from "../types"
+import urlencode from "urlencode"
 
-export default async function uploadPost(url: string, caption: string) {
+export default async function postToWall({
+  title,
+  message,
+  attachments,
+}: {
+  title: string
+  message: string
+  attachments: VkAttachments
+}) {
+  let attachment
+  if (attachments.type !== "none") {
+    let type = attachments.type
+    let media_id = attachments.id
+    let owner_id = attachments.owner_id
+    attachment = `attachments=${type + owner_id}_${media_id}`
+  }
+
   axios
     .get(
-      `https://api.vk.com/method/photos.getWallUploadServer?group_id=200765302&access_token=${process.env.VK_TOKEN}&v=5.126`
+      `https://api.vk.com/method/wall.post?message=${urlencode(
+        message ? title + "\n" + message : title
+      )}&${attachment ? attachment : ""}&owner_id=-200765302&access_token=${
+        process.env.VK_TOKEN
+      }&v=5.126`
     )
-    .then(async (res) => {
-      let uploadUrl = res.data.response.upload_url
-      let form = await createForm(url) //create form with picture from url
-      axios
-        .post(uploadUrl, form, {
-          headers: form.getHeaders(),
-        })
-        .then((res) => {
-          axios
-            .get(
-              `https://api.vk.com/method/photos.saveWallPhoto?group_id=200765302&server=${res.data.server}&photo=${res.data.photo}&hash=${res.data.hash}&caption=${caption}&access_token=${process.env.VK_TOKEN}&v=5.126`
-            )
-            .then((res) => {
-              let response = res.data.response[0]
-              axios
-                .get(
-                  `https://api.vk.com/method/wall.post?attachments=photo${response.owner_id}_${response.id}&owner_id=-200765302&access_token=${process.env.VK_TOKEN}&v=5.126`
-                )
-                .then((res) => {
-                  clear()
-                  console.log(res)
-                })
-            })
-        })
+    .then((res) => {
+      console.log(res.data)
     })
 }
