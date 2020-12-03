@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@types/express": "^4.17.9",
+    "@types/ffmpeg": "^1.0.2",
     "@types/urlencode": "^1.1.2",
     "axios": "^0.21.0",
     "dotenv": "^8.2.0",
