@@ -28,7 +28,3 @@ export async function downloadFile(
     })
   })
 }
-downloadFile(
-  "https://v.redd.it/sb1ekgcyojx51/DASH_1080.mp4?source=fallback",
-  "temp/video.mp4"
-)
