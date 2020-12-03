@@ -5,10 +5,13 @@
  * (.../DASH_1080.mp4...) -> (.../DASH_audio.mp4...)
  */
 export default function modifyUrl(url: string) {
-  let a: any = url.split("_")
-  let b: any = a[1].split(".")
+  let ext = url.indexOf(".mp4") > 0
+  let s = ext ? "." : "?"
+  let s2 = ext ? "_" : "DASH_"
+  let a: any = url.split(s2)
+  let b: any = a[1].split(s)
   b[0] = "audio"
-  b = b.join(".")
+  b = b.join(s)
   a[1] = b
-  return a
+  return a.join(ext ? "_" : "")
 }
