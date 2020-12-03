@@ -1,8 +1,6 @@
 import axios from "axios"
 import { RedditPost, VkAttachments } from "../types"
-import { downloadFile } from "./downloadFile"
 import createForm from "./formData"
-import modifyUrl from "./modifyUrl"
 
 export default async function upload(post: RedditPost) {
   if (post.post_hint) {
@@ -32,8 +30,6 @@ export default async function upload(post: RedditPost) {
         }
       }
     } else if (post.post_hint === "hosted:video") {
-      console.log(post)
-
       let uploaded = await uploadVideoFromReddit(
         post.media.reddit_video.fallback_url
       )
@@ -42,8 +38,8 @@ export default async function upload(post: RedditPost) {
         message: post.selftext,
         attachments: {
           type: "video",
-          // owner_id: uploaded.owner_id,
-          // id: uploaded.video_id,
+          owner_id: uploaded.owner_id,
+          id: uploaded.video_id,
         },
       }
     } else if (post.post_hint === "rich:video") {
@@ -105,8 +101,6 @@ async function uploadGif(url: string) {
       )
     })
     .then((res: any) => {
-      console.log(res.data.response.doc)
-
       return res.data.response.doc
     })
 }
@@ -123,32 +117,22 @@ async function addExternalVideo(url: string) {
 }
 
 async function uploadVideoFromReddit(url: string) {
-  let audioUrl = modifyUrl(url)
-  await downloadFile(url, "temp/video.mp4")
-  await downloadFile(audioUrl, "temp/audio.mp4")
-
-  // return await axios
-  //   .get(
-  //     `https://api.vk.com/method/video.save?link=${url}&wallpost=1&group_id=200765302&access_token=${process.env.VK_TOKEN}&v=5.126`
-  //   )
-  //   .then(async (res) => {
-  //     await axios.get(res.data.response.upload_url)
-  //     return res.data.response
-
-  //     let uploadUrl = res.data.response.upload_url
-  // return axios.post(uploadUrl, form, {
-  //   headers: form.getHeaders(),
-  //   maxBodyLength: Infinity,
-  // })
-  // })
-  // .then((res: any) => {
-  //   return axios.get(
-  //     `https://api.vk.com/method/docs.save?file=${res.data.file}&access_token=${process.env.VK_TOKEN}&v=5.126`
-  //   )
-  // })
-  // .then((res: any) => {
-  //   console.log(res.data.response.doc)
-
-  //   return res.data.response.doc
-  // })
+  let data = { owner_id: "", video_id: "" }
+  let form = await createForm(url, "video_file")
+  return await axios
+    .get(
+      `https://api.vk.com/method/video.save?&wallpost=1&group_id=200765302&access_token=${process.env.VK_TOKEN}&v=5.126`
+    )
+    .then(async (res) => {
+      data.owner_id = res.data.response.owner_id
+      let uploadUrl = res.data.response.upload_url
+      return await axios.post(uploadUrl, form, {
+        headers: form.getHeaders(),
+        maxBodyLength: Infinity,
+      })
+    })
+    .then((res: any) => {
+      data.video_id = res.data.video_id
+      return data
+    })
 }
