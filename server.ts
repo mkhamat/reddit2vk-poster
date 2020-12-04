@@ -1,15 +1,25 @@
-import uploadPost from "./methods/postToWall"
 import dotenv from "dotenv"
 import getPost from "./methods/getPost"
+import uploadMedia from "./methods/uploadMedia"
+import postToWall from "./methods/postToWall"
+import removeTemp from "./utils/removeTemp"
 
 dotenv.config()
 
-setInterval(() => {
-  getPost()
+async function main() {
+  await getPost()
     .then((post: any) => {
-      uploadPost(post.data.url, post.data.title)
+      return uploadMedia(post)
     })
-    .catch((err) => {
-      console.log(err)
+    .then((data: any) => {
+      return postToWall(data)
     })
-}, 1000 * 60 * 60)
+    .then((res) => {
+      console.log(res)
+      removeTemp()
+    })
+}
+
+setInterval(async () => {
+  await main()
+}, 1000 * 60 * 60 * 3)
