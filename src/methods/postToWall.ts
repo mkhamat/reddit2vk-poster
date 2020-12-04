@@ -1,5 +1,5 @@
 import axios from "axios"
-import { VkAttachments } from "../types"
+import { VkAttachments } from "../../types"
 import formData from "form-data"
 
 /**

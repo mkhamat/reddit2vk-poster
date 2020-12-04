@@ -1,5 +1,5 @@
 import axios from "axios"
-import { RedditPost } from "../types"
+import { RedditPost } from "../../types"
 import createForm from "../utils/createForm"
 import translate from "../utils/reverso"
 
