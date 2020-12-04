@@ -74,18 +74,18 @@ async function uploadPicture(url: string) {
   let form = await createForm(url, "photo") //create form with picture from url
   return await axios
     .get(
-      `https://api.vk.com/method/photos.getWallUploadServer?group_id=200765302&access_token=${process.env.VK_TOKEN}&v=5.126`
+      `https://api.vk.com/method/photos.getWallUploadServer?group_id=${process.env.VK_GROUP_ID}&access_token=${process.env.VK_TOKEN}&v=5.126`
     )
     .then((res) => {
       let uploadUrl = res.data.response.upload_url
       return axios.post(uploadUrl, form, {
-        headers: form?.getHeaders(),
+        headers: form.getHeaders(),
         maxBodyLength: Infinity,
       })
     })
     .then((res: any) => {
       return axios.get(
-        `https://api.vk.com/method/photos.saveWallPhoto?group_id=200765302&&server=${res.data.server}&photo=${res.data.photo}&hash=${res.data.hash}&access_token=${process.env.VK_TOKEN}&v=5.126`
+        `https://api.vk.com/method/photos.saveWallPhoto?group_id=${process.env.VK_GROUP_ID}&server=${res.data.server}&photo=${res.data.photo}&hash=${res.data.hash}&access_token=${process.env.VK_TOKEN}&v=5.126`
       )
     })
     .then((res: any) => {
@@ -97,12 +97,12 @@ async function uploadGif(url: string) {
   let form = await createForm(url, "file") //create form with gif from url
   return await axios
     .get(
-      `https://api.vk.com/method/docs.getWallUploadServer?group_id=200765302&access_token=${process.env.VK_TOKEN}&v=5.126`
+      `https://api.vk.com/method/docs.getWallUploadServer?group_id=${process.env.VK_GROUP_ID}&access_token=${process.env.VK_TOKEN}&v=5.126`
     )
     .then((res) => {
       let uploadUrl = res.data.response.upload_url
       return axios.post(uploadUrl, form, {
-        headers: form?.getHeaders(),
+        headers: form.getHeaders(),
         maxBodyLength: Infinity,
       })
     })
@@ -114,17 +114,19 @@ async function uploadGif(url: string) {
     .then((res: any) => {
       return res.data.response.doc
     })
+    .catch((error) => console.error(error))
 }
 
 async function addExternalVideo(url: string) {
   return await axios
     .get(
-      `https://api.vk.com/method/video.save?link=${url}&wallpost=1&group_id=200765302&access_token=${process.env.VK_TOKEN}&v=5.126`
+      `https://api.vk.com/method/video.save?link=${url}&wallpost=1&group_id=${process.env.VK_GROUP_ID}&access_token=${process.env.VK_TOKEN}&v=5.126`
     )
     .then(async (res) => {
       await axios.get(res.data.response.upload_url)
       return res.data.response
     })
+    .catch((error) => console.error(error))
 }
 
 async function uploadVideoFromReddit(url: string) {
@@ -132,7 +134,7 @@ async function uploadVideoFromReddit(url: string) {
   let form = await createForm(url, "video_file")
   return await axios
     .get(
-      `https://api.vk.com/method/video.save?&wallpost=1&group_id=200765302&access_token=${process.env.VK_TOKEN}&v=5.126`
+      `https://api.vk.com/method/video.save?&wallpost=1&group_id=${process.env.VK_GROUP_ID}&access_token=${process.env.VK_TOKEN}&v=5.126`
     )
     .then(async (res) => {
       data.owner_id = res.data.response.owner_id
@@ -146,4 +148,5 @@ async function uploadVideoFromReddit(url: string) {
       data.video_id = res.data.video_id
       return data
     })
+    .catch((error) => error)
 }

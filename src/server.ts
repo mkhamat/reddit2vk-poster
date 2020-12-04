@@ -1,8 +1,8 @@
 import dotenv from "dotenv"
-import getPost from "./src/methods/getPost"
-import uploadMedia from "./src/methods/uploadMedia"
-import postToWall from "./src/methods/postToWall"
-import removeTemp from "./src/utils/removeTemp"
+import getPost from "./methods/getPost"
+import uploadMedia from "./methods/uploadMedia"
+import postToWall from "./methods/postToWall"
+import removeTemp from "./utils/removeTemp"
 
 dotenv.config()
 
@@ -22,4 +22,4 @@ async function main() {
 
 setInterval(async () => {
   await main()
-}, 1000 * 30)
+}, 1000 * 10)

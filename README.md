@@ -4,7 +4,7 @@ This thing is intendend to take `best|hot|popular|etc` posts from reddit and sen
 
 ## How to run
 
-Clone this repo, run `yarn`, compile src folder, and run server.js. You'll need one dependency for proccessing video:
+Clone this repo, run `yarn`, compile , and run server.js. You'll need one dependency for proccessing video:
 
 ffmpeg
 
