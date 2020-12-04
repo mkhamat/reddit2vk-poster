@@ -8,6 +8,10 @@ let app_secret: any = process.env.REDDIT_SECRET
 let username = process.env.REDDIT_USER
 let password = process.env.REDDIT_PASSWORD
 
+let form = new formData()
+form.append("grant_type", "password")
+form.append("username", username)
+form.append("password", password)
 /**
  * Get token
  * Prepare request data
@@ -16,10 +20,6 @@ let password = process.env.REDDIT_PASSWORD
 export default async function getPost() {
   console.log("Fetching post from reddit...")
 
-  let form = new formData()
-  form.append("grant_type", "password")
-  form.append("username", username)
-  form.append("password", password)
   let token = await axios
     .post("https://www.reddit.com/api/v1/access_token", form, {
       headers: form.getHeaders(),

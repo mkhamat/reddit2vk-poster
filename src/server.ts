@@ -22,4 +22,4 @@ async function main() {
 
 setInterval(async () => {
   await main()
-}, 1000 * 30)
+}, 1000 * 10)

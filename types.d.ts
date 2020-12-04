@@ -1,15 +1,15 @@
-export type VkAttachments = {
+type VkAttachments = {
   type: "photo" | "video" | "none"
   owner_id?: string
   id?: string
 }
 
-export type RedditVideo = {
+type RedditVideo = {
   fallback_url: string
   is_gif: boolean
 }
 
-export type RedditPost = {
+type RedditPost = {
   is_video: boolean
   media: null | redditVideo
   post_hint: string
@@ -20,3 +20,5 @@ export type RedditPost = {
   author: string
   permalink: string
 }
+
+export { VkAttachments, RedditPost, RedditVideo }

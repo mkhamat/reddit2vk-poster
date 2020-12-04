@@ -39,6 +39,6 @@ export default async function createForm(
     )
     return form
   } catch (error) {
-    console.error(error)
+    return error
   }
 }
