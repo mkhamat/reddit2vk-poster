@@ -1,8 +1,10 @@
 /**
+ *
  * reddit hosted videos can be accesed via fallback_url
  * bit without audio. Audio can be accessed
  * if you change one piece in the url:
  * (.../DASH_1080.mp4...) -> (.../DASH_audio.mp4...)
+ * @param url
  */
 export default function modifyUrl(url: string) {
   let ext = url.indexOf(".mp4") > 0

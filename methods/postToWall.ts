@@ -1,13 +1,17 @@
 import axios from "axios"
 import { VkAttachments } from "../types"
-import urlencode from "urlencode"
+import formData from "form-data"
 
+/**
+ * Sends data to wall.post method
+ *
+ * @param message
+ * @param attachments
+ */
 export default async function postToWall({
-  title,
   message,
   attachments,
 }: {
-  title: string
   message: string
   attachments: VkAttachments
 }) {
@@ -18,16 +22,21 @@ export default async function postToWall({
     let owner_id = attachments.owner_id
     attachment = `attachments=${type + owner_id}_${media_id}`
   }
+  let form = await new formData()
+  form.append("message", message)
+  form.append("attachments", attachment || "")
+  form.append("owner_id", "-200765302")
+  form.append("access_token", process.env.VK_TOKEN)
+  form.append("v", "5.126")
 
-  axios
-    .get(
-      `https://api.vk.com/method/wall.post?message=${urlencode(
-        message ? title + "\n" + message : title
-      )}&${attachment ? attachment : ""}&owner_id=-200765302&access_token=${
-        process.env.VK_TOKEN
-      }&v=5.126`
-    )
-    .then((res) => {
-      console.log(res.data)
+  return axios
+    .post(`https://api.vk.com/method/wall.post`, form, {
+      headers: await form.getHeaders(),
+      maxContentLength: Infinity,
+      maxBodyLength: Infinity,
     })
+    .then((res) => {
+      return res.data.response.post_id
+    })
+    .catch((err) => console.error(err))
 }

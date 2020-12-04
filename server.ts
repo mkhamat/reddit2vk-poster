@@ -14,12 +14,12 @@ async function main() {
     .then((data: any) => {
       return postToWall(data)
     })
-    .then((res) => {
-      console.log(res)
+    .then((posted) => {
+      if (posted) console.log("Succeffuly posted.")
       removeTemp()
     })
 }
 
 setInterval(async () => {
   await main()
-}, 1000 * 60 * 60 * 3)
+}, 1000 * 30)

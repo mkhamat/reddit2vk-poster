@@ -1,61 +1,72 @@
 import axios from "axios"
-import { RedditPost, VkAttachments } from "../types"
-import createForm from "./formData"
+import { RedditPost } from "../types"
+import createForm from "../utils/createForm"
+import translate from "../utils/reverso"
 
-export default async function upload(post: RedditPost) {
+/**
+ * Handling media in post and uploading if there's any.
+ *
+ * @param post
+ */
+export default async function uploadMedia(post: RedditPost) {
+  console.log("Handling media...")
+
+  post.title = await translate(post.title)
+  post.selftext = await translate(post.selftext)
+  let type
+  let id
+  let owner_id
+  let message =
+    `r/${post.subreddit}` +
+    "\n \n" +
+    post.title +
+    "\n \n" +
+    post.selftext +
+    "\n \n" +
+    `Источник: reddit.com${post.permalink}`
   if (post.post_hint) {
     if (post.post_hint === "image") {
       let uploaded: any
       if (post.url.split(".").reverse()[0] === "gif") {
         uploaded = await uploadGif(post.url)
-        return {
-          title: post.title,
-          message: post.selftext,
-          attachments: {
-            type: "doc",
-            owner_id: uploaded.owner_id,
-            id: uploaded.id,
-          },
-        }
+        type = "doc"
+        id = uploaded.id
+        owner_id = uploaded.owner_id
       } else {
         uploaded = await uploadPicture(post.url)
-        return {
-          title: post.title,
-          message: post.selftext,
-          attachments: {
-            type: "photo",
-            owner_id: uploaded.owner_id,
-            id: uploaded.id,
-          },
-        }
+        type = "photo"
+        id = uploaded.id
+        owner_id = uploaded.owner_id
       }
     } else if (post.post_hint === "hosted:video") {
       let uploaded = await uploadVideoFromReddit(
         post.media.reddit_video.fallback_url
       )
-      return {
-        title: post.title,
-        message: post.selftext,
-        attachments: {
-          type: "video",
-          owner_id: uploaded.owner_id,
-          id: uploaded.video_id,
-        },
-      }
+      type = "video"
+      id = uploaded.video_id
+      owner_id = uploaded.owner_id
     } else if (post.post_hint === "rich:video") {
       let uploaded = await addExternalVideo(post.media.oembed.url)
-      return {
-        title: post.title,
-        message: post.selftext,
-        attachments: {
-          type: "video",
-          owner_id: uploaded.owner_id,
-          id: uploaded.video_id,
-        },
-      }
+      type = "video"
+      id = uploaded.video_id
+      owner_id = uploaded.owner_id
+    }
+
+    return {
+      message: message,
+      attachments: {
+        type: type,
+        owner_id: owner_id,
+        id: id,
+      },
     }
   } else {
-    console.log("no attachment")
+    return {
+      message: message,
+      attachments: {
+        type: "none",
+      },
+    }
   }
 }
 
@@ -68,7 +79,7 @@ async function uploadPicture(url: string) {
     .then((res) => {
       let uploadUrl = res.data.response.upload_url
       return axios.post(uploadUrl, form, {
-        headers: form.getHeaders(),
+        headers: form?.getHeaders(),
         maxBodyLength: Infinity,
       })
     })
@@ -91,7 +102,7 @@ async function uploadGif(url: string) {
     .then((res) => {
       let uploadUrl = res.data.response.upload_url
       return axios.post(uploadUrl, form, {
-        headers: form.getHeaders(),
+        headers: form?.getHeaders(),
         maxBodyLength: Infinity,
       })
     })
@@ -127,7 +138,7 @@ async function uploadVideoFromReddit(url: string) {
       data.owner_id = res.data.response.owner_id
       let uploadUrl = res.data.response.upload_url
       return await axios.post(uploadUrl, form, {
-        headers: form.getHeaders(),
+        headers: form?.getHeaders(),
         maxBodyLength: Infinity,
       })
     })
