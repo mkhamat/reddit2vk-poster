@@ -4,6 +4,8 @@ This thing is intendend to take `best|hot|popular|etc` posts from reddit and sen
 
 It can handle various types of media (pictures, imgur attachments, external video, reddit hosted video, links, gifs)
 
+Additionally it translates all text via reverso translator. (context.reverso.net)
+
 ## How to run
 
 Clone this repo, run `yarn`, run `tsc` to compile, and run `src/server.js`. You'll need one dependency installed for proccessing video:
