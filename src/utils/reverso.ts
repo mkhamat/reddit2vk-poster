@@ -1,7 +1,6 @@
 import axios from "axios"
 
 export default async function translate(text: string) {
-  console.log("translate...")
   return text
     ? await axios
         .post(
