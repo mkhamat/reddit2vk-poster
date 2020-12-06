@@ -20,9 +20,13 @@ export default async function createForm(
     let ext: any = url.split(".")
     ext = ext[ext.length - 1]
     if (type === "video_file") {
-      await downloadFile(url, "temp/video_part.mp4")
-      await downloadFile(modifyUrl(url), "temp/audio_part.mp4")
-      await merge()
+      let sound = await downloadFile(modifyUrl(url), "temp/audio_part.mp4")
+      if (sound === "NO_SOUND") {
+        await downloadFile(url, "temp/video.mp4")
+      } else {
+        await downloadFile(url, "temp/video_part.mp4")
+        await merge()
+      }
     } else {
       await downloadFile(url, `temp/temp.${ext}`)
     }
