@@ -18,8 +18,9 @@ async function main() {
       if (posted) console.log("Succeffuly posted.")
       removeTemp()
     })
+    .catch((error) => console.error(error))
 }
 
 setInterval(async () => {
   await main()
-}, 1000 * 10)
+}, 1000 * 30)
