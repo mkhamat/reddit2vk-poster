@@ -1,6 +1,10 @@
-import { createWriteStream } from "fs"
+import { createWriteStream, existsSync, mkdirSync } from "fs"
 import axios from "axios"
+const dir = "./temp"
 
+if (!existsSync(dir)) {
+  mkdirSync(dir)
+}
 /**
  * Downloads file by URL.
  * @param fileUrl

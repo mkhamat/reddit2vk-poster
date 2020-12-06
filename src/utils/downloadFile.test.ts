@@ -1,6 +1,12 @@
 import { downloadFile } from "./downloadFile"
 import removeTemp from "./removeTemp"
-import fs from "fs"
+import { readdirSync, existsSync, mkdirSync } from "fs"
+
+const dir = "./temp"
+
+if (!existsSync(dir)) {
+  mkdirSync(dir)
+}
 
 test("Download file", () => {
   downloadFile(
@@ -9,7 +15,7 @@ test("Download file", () => {
   )
     .then((res) => {
       expect(res).toBe(true)
-      expect(fs.readdirSync("temp").indexOf("test")).toBeGreaterThanOrEqual(0)
+      expect(readdirSync("temp").indexOf("test")).toBeGreaterThanOrEqual(0)
     })
     .then(() => {
       removeTemp()
