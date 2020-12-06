@@ -32,6 +32,7 @@ export default async function getPost() {
   let result = await axios
     .get(
       "https://oauth.reddit.com/r/WatchPeopleDieInside/comments/k7msya/this_cat_is_beyond_done.json",
+
       {
         headers: { Authorization: `bearer ${token}` },
       }
