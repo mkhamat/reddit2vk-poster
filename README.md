@@ -8,17 +8,30 @@ Additionally it translates all text via [reverso translator](https://context.rev
 
 ## How to run
 
-Clone this repo, run `yarn`, run `tsc` to compile, and run `src/server.js`. You'll need one dependency installed for proccessing video:
+- Clone this repo
+- `$ yarn` to install dependencies
+- `$ yarn build` to compile typescript
+- `$ yarn start` to start the script
+
+You'll need one dependency installed for proccessing video:
 
 `sudo apt install ffmpeg`
 
-And don't forget to create .env file in root directory with these values:
+Also, create .env file in root directory with these values:
 
-```
-VK_TOKEN=
-VK_GROUP_ID=
-REDDIT_SECRET=
-REDDIT_ID=
-REDDIT_USER=
-REDDIT_PASSWORD=
-```
+`VK_TOKEN` \
+`VK_GROUP_ID` \
+`REDDIT_SECRET` \
+`REDDIT_ID` \
+`REDDIT_USER` \
+`REDDIT_PASSWORD`
+
+### Links
+
+[Getting VK Access Token](https://vk.com/dev/implicit_flow_user)
+
+[Learning VK API](https://vk.com/dev/first_guide)
+
+[Getting OAuth2 authentication token on Reddit](https://github.com/reddit-archive/reddit/wiki/OAuth2)
+
+[Reddit API documentation](https://www.reddit.com/dev/api/)
