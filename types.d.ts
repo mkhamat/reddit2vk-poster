@@ -19,6 +19,7 @@ type RedditPost = {
   subreddit: string
   author: string
   permalink: string
+  url_overridden_by_dest: string
 }
 
 export { VkAttachments, RedditPost, RedditVideo }
