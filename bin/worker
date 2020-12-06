@@ -1,0 +1,10 @@
+#! /app/.heroku/node/bin/node
+const script = require("../dist/script.js")
+
+async function run() {
+  await script()
+}
+
+run()
+
+process.exit()
