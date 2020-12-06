@@ -30,7 +30,7 @@ export default async function getPost() {
     })
     .then((res) => res.data.access_token)
   let result = await axios
-    .get("https://oauth.reddit.com/hot", {
+    .get("https://oauth.reddit.com/random", {
       headers: { Authorization: `bearer ${token}` },
     })
     .catch((error) => {
@@ -38,5 +38,5 @@ export default async function getPost() {
       return error
     })
 
-  return result.data.data.children[0].data
+  return result.data[0].data.children[0].data
 }
