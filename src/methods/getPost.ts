@@ -29,9 +29,14 @@ export default async function getPost() {
       },
     })
     .then((res) => res.data.access_token)
-  let result = await axios.get("https://oauth.reddit.com/hot", {
-    headers: { Authorization: `bearer ${token}` },
-  })
+  let result = await axios
+    .get("https://oauth.reddit.com/hot", {
+      headers: { Authorization: `bearer ${token}` },
+    })
+    .catch((error) => {
+      console.error(error)
+      return error
+    })
 
   return result.data.data.children[0].data
 }
