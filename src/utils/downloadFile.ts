@@ -40,5 +40,5 @@ export async function downloadFile(
         })
       })
     })
-    .catch((err) => console.error(err))
+    .catch(() => "NO_SOUND")
 }
