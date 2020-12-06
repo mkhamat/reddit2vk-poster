@@ -1,6 +1,6 @@
 # VK TO REDDIT POSTER
 
-This thing is intendend to take `best|hot|popular|etc` posts from reddit and send them to [vk group](https://vk.com/reddtop) wall.
+This thing is intendend to take `/random` posts from reddit and send them to [vk group](https://vk.com/reddtop) wall.
 
 It can handle various types of media (pictures, imgur attachments, external video, reddit hosted video, links, gifs)
 
