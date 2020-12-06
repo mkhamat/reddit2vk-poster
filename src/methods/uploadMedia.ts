@@ -134,13 +134,13 @@ async function uploadVideoFromReddit(url: string) {
   let form = await createForm(url, "video_file")
   return await axios
     .get(
-      `https://api.vk.com/method/video.save?&wallpost=1&group_id=${process.env.VK_GROUP_ID}&access_token=${process.env.VK_TOKEN}&v=5.126`
+      `https://api.vk.com/method/video.save?&group_id=${process.env.VK_GROUP_ID}&access_token=${process.env.VK_TOKEN}&v=5.126`
     )
     .then(async (res) => {
       data.owner_id = res.data.response.owner_id
       let uploadUrl = res.data.response.upload_url
       return await axios.post(uploadUrl, form, {
-        headers: form?.getHeaders(),
+        headers: form.getHeaders(),
         maxBodyLength: Infinity,
       })
     })
