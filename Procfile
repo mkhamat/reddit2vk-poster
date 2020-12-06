@@ -1,1 +1,1 @@
-worker: node bin/worker
+worker: yarn start
