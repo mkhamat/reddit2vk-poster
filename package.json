@@ -1,7 +1,7 @@
 {
   "scripts": {
     "test": "yarn run jest --detectOpenHandles",
-    "start": "yarn run ts-node src/script.ts"
+    "build": "yarn run tsc"
   },
   "engines": {
     "node": "14.x"

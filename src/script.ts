@@ -6,7 +6,7 @@ import removeTemp from "./utils/removeTemp"
 
 dotenv.config()
 
-async function main() {
+export default async function main() {
   await getPost()
     .then((post: any) => {
       return uploadMedia(post)
@@ -20,5 +20,3 @@ async function main() {
     })
     .catch((error) => console.error(error))
 }
-
-main()
