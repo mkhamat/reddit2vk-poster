@@ -50,8 +50,12 @@ export default async function uploadMedia(post: RedditPost) {
       type = "video"
       id = uploaded.video_id
       owner_id = uploaded.owner_id
+    } else if (post.post_hint === "link") {
+      let uploaded = await uploadPicture(post.url_overridden_by_dest + ".jpg")
+      type = "photo"
+      id = uploaded.id
+      owner_id = uploaded.owner_id
     }
-
     return {
       message: message,
       attachments: {
