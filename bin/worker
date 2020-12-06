@@ -5,6 +5,4 @@ async function run() {
   await script()
 }
 
-run()
-
-process.exit()
+run().then(process.exit())
