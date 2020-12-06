@@ -21,6 +21,4 @@ async function main() {
     .catch((error) => console.error(error))
 }
 
-setInterval(async () => {
-  await main()
-}, 1000 * 30)
+main()
