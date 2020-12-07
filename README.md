@@ -11,7 +11,7 @@ Additionally it translates all text via [reverso translator](https://context.rev
 - Clone this repo
 - `$ yarn` to install dependencies
 - `$ yarn build` to compile typescript
-- `$ yarn start` to start the script
+- `$ node dist/script.js` to start the script
 
 You'll need one dependency installed for proccessing video:
 
