@@ -49,7 +49,7 @@ export default async function uploadMedia(
       id = uploaded.video_id
       owner_id = uploaded.owner_id
     } else if (post.post_hint === "rich:video") {
-      let uploaded = await addExternalVideo(post.media.oembed.url)
+      let uploaded = await addExternalVideo(post.url)
       type = "video"
       id = uploaded.video_id
       owner_id = uploaded.owner_id
