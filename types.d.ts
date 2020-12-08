@@ -20,6 +20,16 @@ type RedditPost = {
   author: string
   permalink: string
   url_overridden_by_dest: string
+  crosspost_parent_list: RedditPost[]
 }
 
-export { VkAttachments, RedditPost, RedditVideo }
+type VkPostData = {
+  message: string
+  attachments: {
+    type?: string
+    owner_id?: string
+    id?: string
+  }
+}
+
+export { VkAttachments, RedditPost, RedditVideo, VkPostData }
