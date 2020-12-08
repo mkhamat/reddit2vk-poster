@@ -1,6 +1,6 @@
 # VK TO REDDIT POSTER
 
-This thing is intendend to take `/random` posts from reddit and send them to [vk group](https://vk.com/reddtop) wall.
+This thing is intendend to take `/random` posts from reddit and send them to [vk group](https://vk.com/randdit) wall.
 
 It can handle various types of media (pictures, imgur attachments, external video, reddit hosted video, links, gifs)
 
@@ -11,7 +11,7 @@ Additionally it translates all text via [reverso translator](https://context.rev
 - Clone this repo
 - `$ yarn` to install dependencies
 - `$ yarn build` to compile typescript
-- `$ yarn start` to start the script
+- `$ node dist/script.js` to start the script
 
 You'll need one dependency installed for proccessing video:
 
