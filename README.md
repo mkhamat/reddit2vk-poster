@@ -2,9 +2,9 @@
 
 This thing is intendend to take `/random` posts from reddit and send them to [vk group](https://vk.com/randdit) wall.
 
-It can handle various types of media (pictures, imgur attachments, external video, reddit hosted video, links, gifs)
+It can handle various types of media (pictures, imgur attachments, external video, reddit hosted video, links, gifs and crossposts).
 
-Additionally it translates all text via [reverso translator](https://context.reverso.net)
+Additionaly, it translates all text via [reverso translator](https://context.reverso.net)
 
 ## How to run
 
@@ -19,19 +19,11 @@ You'll need one dependency installed for proccessing video:
 
 Also, create .env file in root directory with these values:
 
-`VK_TOKEN` \
-`VK_GROUP_ID` \
-`REDDIT_SECRET` \
-`REDDIT_ID` \
-`REDDIT_USER` \
-`REDDIT_PASSWORD`
+`VK_TOKEN=` \
+`VK_GROUP_ID=`
 
 ### Links
 
 [Getting VK Access Token](https://vk.com/dev/implicit_flow_user)
 
 [Learning VK API](https://vk.com/dev/first_guide)
-
-[Getting OAuth2 authentication token on Reddit](https://github.com/reddit-archive/reddit/wiki/OAuth2)
-
-[Reddit API documentation](https://www.reddit.com/dev/api/)
