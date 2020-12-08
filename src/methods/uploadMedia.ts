@@ -1,14 +1,17 @@
 import axios from "axios"
-import { RedditPost } from "../../types"
+import { RedditPost, VkPostData } from "../../types"
 import createForm from "../utils/createForm"
 import translate from "../utils/reverso"
+import getPost from "./getPost"
 
 /**
  * Handling media in post and uploading if there's any.
  *
  * @param post
  */
-export default async function uploadMedia(post: RedditPost) {
+export default async function uploadMedia(
+  post: RedditPost
+): Promise<VkPostData> {
   console.log("Handling media...")
 
   post.title = await translate(post.title)
@@ -64,6 +67,11 @@ export default async function uploadMedia(post: RedditPost) {
         id: id,
       },
     }
+  } else if (post.crosspost_parent_list) {
+    let crosspost = await getPost(
+      `https://reddit.com${post.crosspost_parent_list[0].permalink}.json`
+    )
+    return await uploadMedia(crosspost)
   } else {
     return {
       message: message,
