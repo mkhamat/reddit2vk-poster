@@ -7,7 +7,7 @@ import removeTemp from "./utils/removeTemp"
 dotenv.config()
 
 export default async function main() {
-  await getPost()
+  await getPost("https://reddit.com/random.json")
     .then((post: any) => {
       return uploadMedia(post)
     })
