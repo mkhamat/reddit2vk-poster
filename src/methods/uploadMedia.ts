@@ -67,6 +67,27 @@ export default async function uploadMedia(
         id: id,
       },
     }
+  } else if (post.url_overridden_by_dest) {
+    let uploaded: any
+    if (post.url.split(".").reverse()[0] === "gif") {
+      uploaded = await uploadGif(post.url_overridden_by_dest)
+      type = "doc"
+      id = uploaded.id
+      owner_id = uploaded.owner_id
+    } else {
+      uploaded = await uploadPicture(post.url_overridden_by_dest)
+      type = "photo"
+      id = uploaded.id
+      owner_id = uploaded.owner_id
+    }
+    return {
+      message: message,
+      attachments: {
+        type: type,
+        owner_id: owner_id,
+        id: id,
+      },
+    }
   } else if (post.crosspost_parent_list) {
     let crosspost = await getPost(
       `https://reddit.com${post.crosspost_parent_list[0].permalink}.json`
